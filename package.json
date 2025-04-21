@@ -1,0 +1,45 @@
+{
+
+  "name": "uselesstexteditor",
+  "version": "1.0.0",
+  "description": "A simple text editor with no useful features.",
+  "main": "scripts/main.js",
+
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "app:dist": "electron-builder"
+  },
+
+  "devDependencies": {
+    "electron": "^35.2.0",
+    "electron-builder": "^26.0.12"
+  },
+
+  "dependencies": {
+    "nsis": "^0.0.0"
+  },
+  "build": {
+    "nsis": {
+      "oneclick": false,
+      "allowToChangeInstallationDirectory": true,
+      "appId": "UselessTextEditor",
+      "productName": "Useless Text Editor",
+      "compression": "maximum",
+      "uninstallDisplayName": "Uninstall Useless Text Editor",
+      "files": [
+      "index.html",
+      "index.css",
+      "scripts/main.js",
+      "icon.png",
+      "node_modules/**/*"  
+      ]
+    }
+  },
+  "asar": true,
+  "windows": {
+    "target": "nsis",
+    "icon": "build/icon.ico"
+  }
+}
+
