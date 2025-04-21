@@ -1,5 +1,2 @@
-dist/
-build/
-*.exe
-*.dmg
-*.zip
+node_modules
+dist
