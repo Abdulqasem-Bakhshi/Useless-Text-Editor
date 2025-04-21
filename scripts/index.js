@@ -26,7 +26,7 @@ window.onload = () => {
       textEditor.style.fontSize = `${currentFontSize}px`
     }
   });
-  
+
   // Listen to click event of Zoom Out + Response
   document.addEventListener('click', (event) => {
     if (event.target === zoomOutTextEditor) {
@@ -44,7 +44,7 @@ window.onload = () => {
       const text = textEditor.value.trim().split(' ');
       const removedText = text.pop();
       redoStorage.push(removedText);
-      
+
       textEditor.value = text.join(' ');
     }
   })
@@ -60,8 +60,8 @@ window.onload = () => {
         const restoredText = redoStorage.pop();
         textEditor.value = textEditor.value.trim() + ' ' + restoredText
       }
-      }
     }
+  }
   );
 
   // Select Clear Text button
@@ -109,4 +109,19 @@ window.onload = () => {
     link.click();
     URL.revokeObjectURL(link.href);
   });
+
+  // RTL Text Adjustment
+  function isRTLText(text) {
+    const rtlRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/; // Unicode range for Arabic and Persian
+    return rtlRegex.test(text);
+  }
+
+  //Listen to input in text editor
+  textEditor.addEventListener('input', () => {
+    if (isRTLText(textEditor.value)) {
+      textEditor.setAttribute('dir', 'rtl'); // right to left direction
+    } else {
+      textEditor.setAttribute('dir', 'ltr'); // left to right direction
+    }
+  })
 }

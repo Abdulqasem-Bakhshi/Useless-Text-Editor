@@ -1,45 +1,47 @@
 {
-
   "name": "uselesstexteditor",
   "version": "1.0.0",
-  "description": "A simple text editor with no useful features.",
   "main": "scripts/main.js",
-
   "scripts": {
     "start": "electron .",
     "build": "electron-builder",
+    "app:dir": "electron-builder --dir",
     "app:dist": "electron-builder"
   },
-
+  "keywords": [],
+  "author": "Abdulqasem Bakhshi",
+  "license": "GNU",
+  "description": "A simple text editor with no useful features.",
   "devDependencies": {
     "electron": "^35.2.0",
     "electron-builder": "^26.0.12"
   },
-
-  "dependencies": {
-    "nsis": "^0.0.0"
-  },
-  "build": {
+"build": {
+  "appId": "UselessTextEditor",
+  "productName": "Useless Text Editor",
+  "compression": "maximum",
+  "files": [
+    "index.html",
+    "styles/**/**",
+    "scripts/**/**",
+    "assets/**/*",
+    "node_modules/**/*"
+  ],
+    "extraFiles": [
+      "build/**/*"
+    ],
+    "asar": true,
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
     "nsis": {
-      "oneclick": false,
-      "allowToChangeInstallationDirectory": true,
-      "appId": "UselessTextEditor",
-      "productName": "Useless Text Editor",
-      "compression": "maximum",
-      "uninstallDisplayName": "Uninstall Useless Text Editor",
-      "files": [
-      "index.html",
-      "index.css",
-      "scripts/main.js",
-      "icon.png",
-      "node_modules/**/*"  
-      ]
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "extraMetadata": {
+      "name": "Useless Text Editor",
+      "version": "1.0.0"
     }
-  },
-  "asar": true,
-  "windows": {
-    "target": "nsis",
-    "icon": "build/icon.ico"
   }
 }
-
