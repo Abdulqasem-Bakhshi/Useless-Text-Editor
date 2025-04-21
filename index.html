@@ -22,13 +22,15 @@
         </div>
       </div>
       <div class="button-container">
-        <button class="button">Zoom In</button>
-        <button class="button">Zoom Out</button>
-        <button class="button">Open</button>
-        <button class="button">Save</button>
-        <button class="button">Clear</button>
-        <button class="button">Redo</button>
-        <button class="button">Undo</button>
+        <button id="zoom-in" class="button">Zoom In</button>
+        <button id="zoom-out" class="button">Zoom Out</button>
+        <button id="open" class="button">Open
+          <input type="file" id="open-file-input" accept=".txt" style="display: none;">
+        </button>
+        <button id="save" class="button">Save</button>
+        <button id="clear" class="button">Clear</button>
+        <button id="undo" class="button">Undo</button>
+        <button id="redo" class="button">Redo</button>
       </div>
       <div class="text-editor">
         <textarea class="text-editor-input" spellcheck="false" placeholder="Type something useless here..."></textarea>
