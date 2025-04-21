@@ -37,7 +37,7 @@ html, body {
 }
 
 .navbar {
-  border: 5px solid purple;
+  border: 1px solid purple;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -69,11 +69,11 @@ html, body {
 }
 
 .navbar-buttons {
+  border: 1px solid rgb(142, 142, 255);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgb(142, 142, 255);
 }
 
 .nav-button {
@@ -113,17 +113,17 @@ html, body {
 }
 
 .text-editor-input {
+  border: 1px solid orange;
   width: 100%;
   height: 100%;
   overflow: scroll;
-  border: 1px solid orange;
 }
 
 textarea {
+  border: 1px solid pink;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  border: 1px solid pink;
   font-family: monospace;
   font-size: 16px;
   resize: none;
@@ -132,7 +132,7 @@ textarea {
 .attribute-Container {
   border: 1px solid rgb(158, 158, 71);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 5px;
@@ -141,7 +141,16 @@ textarea {
 .attribute-text {
   border: 1px solid rgb(114, 62, 62);
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   font-family: monospace;
+  margin-right: 10px;
+}
+
+.link {
+  color: green;
+  text-decoration: none;
+  font-family: monospace;
+  font-size: 13px;
 }
