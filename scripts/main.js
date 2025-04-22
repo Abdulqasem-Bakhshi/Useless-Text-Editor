@@ -11,7 +11,7 @@ function createWindow() {
 }
 function mainWindowRes() {
   mainWindow = new BrowserWindow({
-    minWidth: 300,
+    minWidth: 400,
     minHeight: 400,
     width: 800,
     height: 800,

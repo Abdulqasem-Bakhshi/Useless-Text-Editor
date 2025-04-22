@@ -16,17 +16,17 @@
     "electron": "^35.2.0",
     "electron-builder": "^26.0.12"
   },
-"build": {
-  "appId": "UselessTextEditor",
-  "productName": "Useless Text Editor",
-  "compression": "maximum",
-  "files": [
-    "index.html",
-    "styles/**/**",
-    "scripts/**/**",
-    "assets/**/*",
-    "node_modules/**/*"
-  ],
+  "build": {
+    "appId": "UselessTextEditor",
+    "productName": "Useless Text Editor",
+    "compression": "maximum",
+    "files": [
+      "index.html",
+      "styles/**/**",
+      "scripts/**/**",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
     "extraFiles": [
       "build/**/*"
     ],

@@ -1,13 +1,14 @@
 window.onload = () => {
   // Select text editor input element
   const textEditor = document.querySelector('.text-editor-input');
+  const textContainer = document.querySelector('text-editor');
 
   // Make text editor input focusable
   textEditor.focus();
 
   // Event Listener to ensure onclick maintain focus on text editor
   document.addEventListener('click', (event) => {
-    if (event.target !== textEditor) {
+    if (event.target == textEditor || event.target === textContainer) {
       textEditor.focus();
     }
   })
