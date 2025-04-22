@@ -1,4 +1,14 @@
 window.onload = () => {
+  document.getElementById('minimize').addEventListener('click', () => {
+    window.electronAPI.minimizeWindow();
+  });
+
+  document.getElementById('close').addEventListener('click', () => {
+    window.electronAPI.closeWindow();
+  });
+
+
+  
   // Select text editor input element
   const textEditor = document.querySelector('.text-editor-input');
   const textContainer = document.querySelector('text-editor');
