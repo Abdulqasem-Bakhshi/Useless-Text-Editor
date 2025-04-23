@@ -2,6 +2,7 @@ node_modules
 scripts\installer.js
 windows-installer
 scripts\draft.js
+installer.js
 dist/
 dist
 build/
