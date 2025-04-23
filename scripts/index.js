@@ -1,4 +1,6 @@
-window.onload = () => {
+// This is the new code I have made + help for efficient buttons ONLY
+
+document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('minimize').addEventListener('click', () => {
     window.electronAPI.minimizeWindow();
   });
@@ -8,16 +10,16 @@ window.onload = () => {
   });
 
 
-  
+
   // Select text editor input element
   const textEditor = document.querySelector('.text-editor-input');
-  const textContainer = document.querySelector('text-editor');
+  const textContainer = document.querySelector('.text-editor');
 
   // Make text editor input focusable
   textEditor.focus();
 
   // Event Listener to ensure onclick maintain focus on text editor
-  document.addEventListener('click', (event) => {
+  textEditor.addEventListener('click', (event) => {
     if (event.target == textEditor || event.target === textContainer) {
       textEditor.focus();
     }
@@ -27,98 +29,129 @@ window.onload = () => {
   const zoomInTextEditor = document.querySelector('#zoom-in');
   const zoomOutTextEditor = document.querySelector('#zoom-out');
 
-  // Select current font size of text editor and save
-  let currentFontSize = parseInt(window.getComputedStyle(textEditor).fontSize);
+  const minFontSize = 16;
+  const maxFontSize = 24;
+  let fontScale = 20;
+  const scaleStep = 1;
 
-  // Listen to click event of Zoom In + Response
-  document.addEventListener('click', (event) => {
-    if (event.target === zoomInTextEditor) {
-      currentFontSize += 1;
-      textEditor.style.fontSize = `${currentFontSize}px`
+  function updateScale() {
+    textEditor.style.fontSize = `${fontScale}px`;
+  }
+
+  // Zoom In
+  zoomInTextEditor.addEventListener('click', () => {
+    if (fontScale < maxFontSize) {
+      fontScale = Math.min(maxFontSize, fontScale + scaleStep);
+      updateScale();
     }
   });
 
-  // Listen to click event of Zoom Out + Response
-  document.addEventListener('click', (event) => {
-    if (event.target === zoomOutTextEditor) {
-      currentFontSize -= 1;
-      textEditor.style.fontSize = `${currentFontSize}px`
+  // Zoom Out
+  zoomOutTextEditor.addEventListener('click', () => {
+    if (fontScale > minFontSize) {
+      fontScale = Math.max(minFontSize, fontScale - scaleStep);
+      updateScale();
     }
   });
 
-  // Select Undo button
-  const undoTextEditor = document.querySelector('#undo');
 
-  // Listen to click event of Undo + Response
-  document.addEventListener('click', (event) => {
-    if (event.target === undoTextEditor) {
-      const text = textEditor.value.trim().split(' ');
-      const removedText = text.pop();
-      redoStorage.push(removedText);
+  const undoButton        = document.querySelector('#undo');
+  const redoButton        = document.querySelector('#redo');
+  const clearButton       = document.querySelector('#clear');
+  const openButton        = document.querySelector('#open');
+  const openFileInput  = document.querySelector('#open-file-input');
+  const saveButton        = document.querySelector('#save');
 
-      textEditor.value = text.join(' ');
-    }
-  })
+  // State
+  let undoStack = [];
+  let redoStack = [];
+  const maxStackSize = 100; // prevent runaway memory use
 
-  // Select Redo button
-  const redoTextEditor = document.querySelector('#redo');
-  const redoStorage = [];
-
-  // Listen to click event of Redo + Response
-  document.addEventListener('click', (event) => {
-    if (event.target === redoTextEditor) {
-      if (redoStorage.length > 0) {
-        const restoredText = redoStorage.pop();
-        textEditor.value = textEditor.value.trim() + ' ' + restoredText
-      }
+  // Helpers
+  function pushUndoState() {
+    undoStack.push(textEditor.value);
+    if (undoStack.length > maxStackSize) {
+      undoStack.shift();
     }
   }
-  );
 
-  // Select Clear Text button
-  const clearTextButton = document.querySelector('#clear');
+  function render() {
+    // Enable/disable buttons based on state
+    undoButton.disabled = undoStack.length === 0;
+    redoButton.disabled = redoStack.length === 0;
+    // The textarea already shows the current value
+  }
 
-  // Listen to click event of Clear Text + Response
-  document.addEventListener('click', (event) => {
-    if (event.target === clearTextButton) {
-      textEditor.value = '';
-    }
-  })
+  // Record initial state
+  pushUndoState();
+  render();
 
-  // Select Open button
-  const openTextButton = document.querySelector('#open');
-  const openFileInput = document.querySelector('#open-file-input');
-
-  // Listen to click event of Open + Response
-  openTextButton.addEventListener('click', () => {
-    openFileInput.click();
+  // Listen for changes in the text area (to record undo checkpoints)
+  textEditor.addEventListener('input', () => {
+    // whenever the user types, push a new state and clear redo stack
+    pushUndoState();
+    redoStack = [];
+    render();
   });
 
-  openFileInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        textEditor.value = e.target.result;
-      };
-      reader.readAsText(file);
+  // Undo
+  undoButton.addEventListener('click', () => {
+    if (undoStack.length > 1) {
+      // Current state goes to redo
+      redoStack.push(undoStack.pop());
+      // Restore previous
+      textEditor.value = undoStack[undoStack.length - 1];
+      render();
     }
-  })
+  });
 
-  // Select Save button
-  const saveTextButton = document.querySelector('#save');
-  const saveFileInput = document.querySelector('#save-file-input');
+  // Redo
+  redoButton.addEventListener('click', () => {
+    if (redoStack.length > 0) {
+      const next = redoStack.pop();
+      pushUndoState();           // current goes onto undo
+      textEditor.value = next;   // restore
+      render();
+    }
+  });
 
-  // Listen to click event of Save + Response
-  saveTextButton.addEventListener('click', () => {
+  // Clear
+  clearButton.addEventListener('click', () => {
+    if (textEditor.value !== '') {
+      pushUndoState();
+      redoStack = [];
+      textEditor.value = '';
+      render();
+    }
+  });
 
-    const text = textEditor.value;
-    const blob = new Blob([text], { type: 'text/plain' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'useless-text-editor.txt';
-    link.click();
-    URL.revokeObjectURL(link.href);
+  // Open
+  openButton.addEventListener('click', () => openFileInput.click());
+  openFileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      pushUndoState();
+      redoStack = [];
+      textEditor.value = ev.target.result;
+      render();
+    };
+    reader.readAsText(file);
+  });
+
+  // Save
+  saveButton.addEventListener('click', () => {
+    const blob = new Blob([textEditor.value], { type: 'text/plain' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+
+    a.href = url;
+    a.download = 'useless-text-editor.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   });
 
   // RTL Text Adjustment
@@ -135,4 +168,30 @@ window.onload = () => {
       textEditor.setAttribute('dir', 'ltr'); // left to right direction
     }
   })
-}
+
+
+  // Theme
+  const themeButton = document.querySelector("#theme");
+  const themeStyleSheet = document.querySelector("#theme-stylesheet");
+
+  // Check the saved theme or default to light
+  const currentTheme = localStorage.getItem("theme") || "light";
+
+  // Apply the saved theme on page load
+  if (currentTheme === "dark") {
+    themeStyleSheet.href = "styles/index-black.css"; // Switch to dark theme
+  }
+
+  // Toggle theme when the button is clicked
+  themeButton.addEventListener("click", () => {
+    const currentTheme = themeStyleSheet.getAttribute("href");
+
+    if (currentTheme === "styles/index-black.css") {
+      themeStyleSheet.href = "styles/index.css"; // Switch to light theme
+      localStorage.setItem("theme", "light"); // Save the light theme preference
+    } else {
+      themeStyleSheet.href = "styles/index-black.css"; // Switch to dark theme
+      localStorage.setItem("theme", "dark"); // Save the dark theme preference
+    }
+  });
+});
