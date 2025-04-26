@@ -2,6 +2,9 @@
 
 **Useless Text Editor** is a simple text editor app that is meant to be useless. I made this project for fun and experiment with stuff while learning programming languages.
 
+# 👇 Launch the app via Browser 👇
+https://abdulqasem-bakhshi.github.io/UselessTextEditor/
+
 Have fun!
 
-![Useless Text Editor](https://github.com/user-attachments/assets/75c6b8b3-1802-4d80-a233-75aca29d64dd) ![Screenshot 2025-04-25 152516](https://github.com/user-attachments/assets/549425c3-8ae6-4cb0-b413-8bdfc065c99a)
+![UselessTextEditorWhite](https://github.com/user-attachments/assets/db6375d6-3101-496b-b149-af460a0454fa) ![UselessTextEditorBlack](https://github.com/user-attachments/assets/1f2d2d02-b001-4ee8-a1b8-5b500ed8a7be)
