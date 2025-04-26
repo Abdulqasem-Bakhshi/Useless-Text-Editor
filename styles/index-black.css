@@ -89,8 +89,9 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 5px;
   padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   height: 100%;
 }
 
