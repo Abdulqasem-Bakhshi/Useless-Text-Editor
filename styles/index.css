@@ -42,7 +42,6 @@ html, body {
   justify-content: space-between;
   align-items: center;
   -webkit-app-region: drag;
-
 }
 
 .navbar-icon {
@@ -50,6 +49,12 @@ html, body {
   justify-content: center;
   align-items: center;
   user-select: none;
+}
+
+.navbar-icon svg {
+  width: 24px;
+  height: 24px;
+  color: black; /* Color for local Inline SVG img*/ 
 }
 
 .icon-item {

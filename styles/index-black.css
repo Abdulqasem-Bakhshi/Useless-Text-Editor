@@ -52,6 +52,12 @@ html, body {
   user-select: none;
 }
 
+.navbar-icon svg {
+  width: 24px;
+  height: 24px;
+  color: white; /* Color for local Inline SVG img*/ 
+}
+
 .icon-item {
   display: flex;
   justify-content: center;

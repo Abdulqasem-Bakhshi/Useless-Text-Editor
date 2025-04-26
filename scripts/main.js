@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain} = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path'); // import path module for preload
 
 let mainWindow;
@@ -17,7 +17,7 @@ function mainWindowRes() {
     height: 800,
     frame: false,
     resizable: true,
-    icon: path.join(__dirname, '../assets/icon.png'),
+    icon: path.join(__dirname, '../assets/icon2.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       devTools: true,
@@ -65,8 +65,10 @@ if (!gotLock) {
       }
     });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-})})};
+    app.on('window-all-closed', () => {
+      if (process.platform !== 'darwin') {
+        app.quit();
+      }
+    })
+  })
+};

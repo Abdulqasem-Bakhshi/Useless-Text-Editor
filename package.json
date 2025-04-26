@@ -34,15 +34,14 @@
     "asar": true,
     "win": {
       "target": "nsis",
-      "icon": "assets/icon.ico"
+      "icon": "assets/icon3.ico"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     },
     "extraMetadata": {
-      "name": "Useless Text Editor",
-      "version": "1.0.0"
+      "name": "Useless Text Editor"
     }
   }
 }
