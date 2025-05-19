@@ -26,6 +26,15 @@ function mainWindowRes() {
     },
   });
 
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    if (
+      (input.control || input.meta) &&
+      (['+', '-', '=', '0'].includes(input.key))
+    ) {
+      event.preventDefault();
+    }
+  });
+
   mainWindow.loadFile('index.html');
 };
 
